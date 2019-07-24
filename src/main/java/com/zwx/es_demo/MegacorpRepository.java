@@ -3,6 +3,8 @@ package com.zwx.es_demo;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.yaml.snakeyaml.events.Event;
 
+import java.util.List;
+
 /**
  * @program: es_demo
  * @description:
@@ -12,4 +14,8 @@ import org.yaml.snakeyaml.events.Event;
  * @create: 2019-07-23 11:11
  **/
 public interface MegacorpRepository extends ElasticsearchRepository<Megacorp,Long> {
+
+    List<Megacorp> findByIdBetween(Long a,Long b);
+
+    List<Megacorp> findByInterestsLike(String s);
 }

@@ -19,8 +19,12 @@ import java.io.Serializable;
 @Document(indexName = "megacorp",type = "docs",shards = 3,replicas = 0)
 public class Megacorp implements Serializable {
 
+    @Id
     private Long id;
 
+    /**
+     * 不加Type的话 默认FieldType.Auto jpa也可以通过字段的值猜出它的类型
+     */
     @Field(type = FieldType.Text)
     private String last_name;
     @Field(type = FieldType.Text)
@@ -40,5 +44,8 @@ public class Megacorp implements Serializable {
         this.interests = interests;
         this.age = age;
         this.about = about;
+    }
+
+    public Megacorp() {
     }
 }
