@@ -1,6 +1,10 @@
 package com.zwx.es_demo;
 
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
+import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -175,6 +181,57 @@ public class EsDemoApplicationTests {
             System.out.println(item);
         }
     }
+
+    /**
+     * @Description:排序查询
+     */
+    @Test
+    public void searchAndSort(){
+        NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
+        queryBuilder.withQuery(QueryBuilders.termQuery("interests", "一"));
+        // 排序
+        queryBuilder.withSort(SortBuilders.fieldSort("id").order(SortOrder.DESC));
+
+        // 搜索，获取结果
+        Page<Megacorp> items = repository.search(queryBuilder.build());
+        // 总条数
+        long total = items.getTotalElements();
+        System.out.println("总条数 = " + total);
+
+        for (Megacorp item : items) {
+            System.out.println(item);
+        }
+    }
+
+    /**
+     * @Description: 按照 字段 进行分组
+     */
+    @Test
+    public void testAgg(){
+        NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
+        // 不查询任何结果
+        queryBuilder.withSourceFilter(new FetchSourceFilter(new String[]{""}, null));
+        // 1、添加一个新的聚合，聚合类型为Megacorp，聚合名称为last_names，聚合字段为last_name
+        queryBuilder.addAggregation(
+                AggregationBuilders.terms("last_names").field("last_name"));
+        // 2、查询,需要把结果强转为AggregatedPage类型
+        AggregatedPage<Megacorp> aggPage = (AggregatedPage<Megacorp>) repository.search(queryBuilder.build());
+        // 3、解析
+        // 3.1、从结果中取出名为brands的那个聚合，
+        // 因为是利用String类型字段来进行的Megacorp聚合，所以结果要强转为StringTerm类型
+        StringTerms agg = (StringTerms) aggPage.getAggregation("last_names");
+        // 3.2、获取桶
+        List<StringTerms.Bucket> buckets = agg.getBuckets();
+        // 3.3、遍历
+        for (StringTerms.Bucket bucket : buckets) {
+            // 3.4、获取桶中的key，即last_name
+            System.out.println("Key:"+bucket.getKeyAsString());
+            // 3.5、获取桶中的文档数量
+            System.out.println("数量："+bucket.getDocCount());
+        }
+
+    }
+
 
 
 }

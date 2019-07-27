@@ -25,7 +25,7 @@ public class Megacorp implements Serializable {
     /**
      * 不加Type的话 默认FieldType.Auto jpa也可以通过字段的值猜出它的类型
      */
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text,fielddata = true)
     private String last_name;
     @Field(type = FieldType.Text)
     private String first_name;
