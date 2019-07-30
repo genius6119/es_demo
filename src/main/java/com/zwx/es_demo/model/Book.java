@@ -1,4 +1,4 @@
-package com.zwx.es_demo;
+package com.zwx.es_demo.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -21,7 +21,7 @@ public class Book implements Serializable {
     private Long id;
 
     /**
-     * 指定中文分词
+     * 指定中文分词 ik_smart
      */
     @Field(type = FieldType.Text,analyzer = "ik_smart")
     private String name;

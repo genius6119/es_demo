@@ -1,5 +1,6 @@
-package com.zwx.es_demo;
+package com.zwx.es_demo.dao;
 
+import com.zwx.es_demo.model.Book;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
