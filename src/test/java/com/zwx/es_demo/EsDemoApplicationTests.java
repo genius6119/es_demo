@@ -1,11 +1,9 @@
 package com.zwx.es_demo;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zwx.es_demo.dao.BookRepository;
-import com.zwx.es_demo.dao.MegacorpRepository;
-import com.zwx.es_demo.model.Book;
-import com.zwx.es_demo.model.IndexMessage;
-import com.zwx.es_demo.model.Megacorp;
+import com.zwx.es_demo.esDao.EsBookRepository;
+import com.zwx.es_demo.esDao.MegacorpRepository;
+import com.zwx.es_demo.esModel.Book;
+import com.zwx.es_demo.esModel.Megacorp;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
@@ -21,11 +19,8 @@ import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,18 +35,8 @@ public class EsDemoApplicationTests {
     private MegacorpRepository repository;
 
     @Autowired
-    private BookRepository bookRepository;
+    private EsBookRepository bookRepository;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    private KafkaTemplate<String,String> kafkaTemplate;
-
-    @KafkaListener(topics = "demo")
-    private void handleMessage(String content) throws IOException {
-        objectMapper.readValue(content, IndexMessage.class);
-    }
 
 
     /**
@@ -74,7 +59,7 @@ public class EsDemoApplicationTests {
     public void save() {
 //        Megacorp megacorp = new Megacorp(1L,"1","1","1",10L,"1");
 //        repository.save(megacorp);
-        Book book =new Book(1L,"java实战开发经典");
+        Book book =new Book(2L,"java实战开发经典");
         bookRepository.save(book);
     }
 

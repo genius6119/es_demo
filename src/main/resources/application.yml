@@ -13,6 +13,18 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.93.236.80:3306/laozhangdb
+    username: root
+    password: AaAaAa123
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+  main:
+    allow-bean-definition-overriding: true
+
 
 
 server:

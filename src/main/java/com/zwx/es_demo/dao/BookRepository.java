@@ -1,13 +1,15 @@
 package com.zwx.es_demo.dao;
 
 import com.zwx.es_demo.model.Book;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * @program: es_demo
  * @description:
  * @author: Zwx
- * @create: 2019-07-24 16:05
+ * @create: 2019-08-02 15:01
  **/
-public interface BookRepository extends ElasticsearchRepository<Book,Long> {
+@Repository
+public interface BookRepository extends CrudRepository<Book,Long> {
 }

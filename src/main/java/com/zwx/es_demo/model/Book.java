@@ -1,36 +1,24 @@
 package com.zwx.es_demo.model;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.io.Serializable;
+import javax.persistence.*;
 
 /**
  * @program: es_demo
- * @description: 书
+ * @description: 数据库book
  * @author: Zwx
- * @create: 2019-07-24 15:58
+ * @create: 2019-08-02 12:28
  **/
+@Entity
 @Data
-@Document(indexName = "book",type = "doc",shards = 1,replicas = 0)
-public class Book implements Serializable {
+@Table(name = "book")
+public class Book {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
-
-    /**
-     * 指定中文分词 ik_smart
-     */
-    @Field(type = FieldType.Text,analyzer = "ik_smart")
-    private String name;
-
-    public Book() {
-    }
-
-    public Book(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-}
+    @Column(name = "name")
+    private String name;}

@@ -1,6 +1,6 @@
-package com.zwx.es_demo.dao;
+package com.zwx.es_demo.esDao;
 
-import com.zwx.es_demo.model.Megacorp;
+import com.zwx.es_demo.esModel.Megacorp;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.zwx.es_demo.model;
+package com.zwx.es_demo.esModel;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
