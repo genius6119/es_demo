@@ -16,16 +16,20 @@ import java.io.Serializable;
  **/
 @Data
 @Document(indexName = "book",type = "doc",shards = 1,replicas = 0)
-public class Book implements Serializable {
+public class EsBook implements Serializable {
     @Id
     private Long id;
-    @Field(type = FieldType.Text,analyzer = "ik_smart")      /** 指定中文分词 ik_smart*/
+    /**
+     * 不加Type的话 默认FieldType.Auto jpa也可以通过字段的值猜出它的类型
+     * 这里也指定了中文分词 ik_smart ，具体安装方法见百度
+     */
+    @Field(type = FieldType.Text,analyzer = "ik_smart")
     private String name;
 
-    public Book() {
+    public EsBook() {
     }
 
-    public Book(Long id, String name) {
+    public EsBook(Long id, String name) {
         this.id = id;
         this.name = name;
     }

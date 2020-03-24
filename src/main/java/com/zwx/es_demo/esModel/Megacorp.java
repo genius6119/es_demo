@@ -18,10 +18,8 @@ import java.io.Serializable;
 @Data
 @Document(indexName = "megacorp",type = "docs",shards = 3,replicas = 0)
 public class Megacorp implements Serializable {
-
     @Id
     private Long id;
-
     /**
      * 不加Type的话 默认FieldType.Auto jpa也可以通过字段的值猜出它的类型
      */

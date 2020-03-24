@@ -1,11 +1,13 @@
 package com.zwx.es_demo.service;
 
 import com.zwx.es_demo.dao.BookRepository;
+import com.zwx.es_demo.esModel.EsBook;
 import com.zwx.es_demo.kafkaService.KafkaProducer;
 import com.zwx.es_demo.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @program: es_demo
@@ -24,7 +26,7 @@ public class BookService {
 
     public void insertBook(Book book) {
         bookRepository.save(book);
-        com.zwx.es_demo.esModel.Book book1 = new com.zwx.es_demo.esModel.Book(book.getId(),book.getName());
+        EsBook book1 = new EsBook(book.getId(),book.getName());
         kafkaProducer.insertBook(book1);
     }
 }

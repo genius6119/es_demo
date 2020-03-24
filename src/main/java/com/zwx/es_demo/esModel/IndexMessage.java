@@ -15,14 +15,14 @@ public class IndexMessage {
     public static final String REMOVE = "remove";
 
     private Integer id;
-    private Book book;
+    private EsBook book;
     private String operation;
     private int retry = 0;
 
     public IndexMessage() {
     }
 
-    public IndexMessage(Integer id, Book book, String operation, int retry) {
+    public IndexMessage(Integer id, EsBook book, String operation, int retry) {
         this.id = id;
         this.book = book;
         this.operation = operation;

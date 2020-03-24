@@ -2,7 +2,7 @@ package com.zwx.es_demo.kafkaService;
 
 import com.alibaba.fastjson.JSON;
 import com.zwx.es_demo.constant.Constant;
-import com.zwx.es_demo.esModel.Book;
+import com.zwx.es_demo.esModel.EsBook;
 import com.zwx.es_demo.esModel.IndexMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class KafkaProducer {
         kafkaTemplate.send(Constant.TOPIC, JSON.toJSONString(msg));
     }
 
-    public void insertBook(Book book){
+    public void insertBook(EsBook book){
         IndexMessage msg = new IndexMessage(1,book,"新增",0);
         log.info(msg.toString());
         kafkaTemplate.send(Constant.TOPIC, JSON.toJSONString(msg));

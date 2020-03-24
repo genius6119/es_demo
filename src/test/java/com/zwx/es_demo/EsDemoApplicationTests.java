@@ -2,7 +2,7 @@ package com.zwx.es_demo;
 
 import com.zwx.es_demo.esDao.EsBookRepository;
 import com.zwx.es_demo.esDao.MegacorpRepository;
-import com.zwx.es_demo.esModel.Book;
+import com.zwx.es_demo.esModel.EsBook;
 import com.zwx.es_demo.esModel.Megacorp;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
@@ -44,12 +44,12 @@ public class EsDemoApplicationTests {
      */
     @Test
     public void createIndex() {
-        esTemplate.createIndex(Book.class);
+        esTemplate.createIndex(EsBook.class);
     }
 
     @Test
     public void deleteIndex(){
-        esTemplate.deleteIndex(Book.class);
+        esTemplate.deleteIndex(EsBook.class);
     }
 
     /**
@@ -59,7 +59,7 @@ public class EsDemoApplicationTests {
     public void save() {
 //        Megacorp megacorp = new Megacorp(1L,"1","1","1",10L,"1");
 //        repository.save(megacorp);
-        Book book =new Book(2L,"java实战开发经典");
+        EsBook book =new EsBook(2L,"java实战开发经典");
         bookRepository.save(book);
     }
 
@@ -147,10 +147,10 @@ public class EsDemoApplicationTests {
 //        方法1
         NativeSearchQueryBuilder builder = new NativeSearchQueryBuilder();
         builder.withQuery(QueryBuilders.fuzzyQuery("name","java"));
-        Page<Book> page = bookRepository.search(builder.build());
+        Page<EsBook> page = bookRepository.search(builder.build());
 //        方法2
 //        Iterable<Megacorp> page = repository.findByInterestsLike("模糊");
-        for (Book m :page){
+        for (EsBook m :page){
             System.out.println(m);
         }
     }
